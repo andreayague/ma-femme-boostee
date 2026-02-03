@@ -41,7 +41,7 @@ except:
 if not st.session_state.empezar:
     st.markdown('<p class="titulo-gigante">Coucou ma femme boostée ! ❤️</p>', unsafe_allow_html=True)
     st.write("<br><br>", unsafe_allow_html=True)
-    if st.button("Clique ici mon amour ✨"):
+    if st.button("Clique ici mi amor ✨"):
         st.session_state.empezar = True
         st.rerun()
 
@@ -56,7 +56,7 @@ elif st.session_state.mostrar_final:
     
     st.success("Je t'aime !")
     st.markdown("""
-    ### Je t'aime. 
+    ### Je t'aime tete de noeil. 
     ### Sois prête le dimanche 15 janvier à 20h. 
     ### Habille-toi très jolie, même s'il me semble impossible que tu sois plus belle que tu ne l'es déjà. ❤️
     """)
@@ -64,7 +64,7 @@ elif st.session_state.mostrar_final:
 # PANTALLA 2: LA PREGUNTA
 else:
     st.title("Veux-tu être ma Valentine ? 🌹")
-    st.image("https://i.pinimg.com/originals/81/15/44/8115442566c727a2024b33878b66f212.gif")
+    st.image("https://i.pinimg.com/originals/f1/09/3d/f1093dd6dce5892d2b74c6e8d8c1c909.gif")
 
     # Tamaño del botón OUI
     tamano_si = 18 + (st.session_state.intentos * 12)
