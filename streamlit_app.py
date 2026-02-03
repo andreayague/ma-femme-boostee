@@ -53,7 +53,7 @@ if not st.session_state.empezar:
 elif st.session_state.mostrar_final:
     st.balloons()
     st.title("OUI ! ❤️")
-    st.image("mi_foto.jpg", caption="tete de noeil")
+    st.image("IMG_1950.jpg", caption="tete de noeil")
     st.success("Je t'aime !")
     st.markdown(f"""
     ### Je t'aime. 
