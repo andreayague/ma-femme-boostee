@@ -27,10 +27,9 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# --- FUNCIÓN PARA TU MÚSICA ESPECÍFICA ---
+# --- FUNCIÓN DE AUDIO ---
 def reproducir_musica():
     try:
-        # Usando el nombre exacto de tu archivo en GitHub
         with open("These_Eyes_KLICKAUD.mp3", "rb") as f:
             data = f.read()
             st.audio(data, format="audio/mp3", autoplay=True, loop=True)
@@ -51,9 +50,8 @@ elif st.session_state.mostrar_final:
     st.balloons()
     st.title("OUI ! ❤️")
     
-    # Usando el nombre exacto de tu foto en GitHub
     try:
-        st.image("IMG_1950.jpg", use_container_width=True, caption="Je t'aime ❤️")
+        st.image("IMG_1950.jpg", use_container_width=True)
     except:
         st.image("https://i.pinimg.com/originals/81/15/44/8115442566c727a2024b33878b66f212.gif")
     
@@ -68,10 +66,11 @@ elif st.session_state.mostrar_final:
 else:
     reproducir_musica()
     st.title("Veux-tu être ma Valentine ? 🌹")
-    # Tu GIF original de Pinterest
     st.image("https://i.pinimg.com/originals/81/15/44/8115442566c727a2024b33878b66f212.gif")
 
     if st.session_state.intentos < 3:
         col1, col2 = st.columns(2)
         with col1:
             if st.button("OUI ! ❤️", type="primary", use_container_width=True):
+                st.session_state.mostrar_final = True
+                st
