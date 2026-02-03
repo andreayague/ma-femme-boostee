@@ -28,9 +28,10 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # Música de fondo
-# --- MÚSICA (Audio Player) ---
-# He usado una canción romántica instrumental de ejemplo (puedes cambiar el link .mp3)
-audio_url = "" 
+with open("These_Eyes_KLICKAUD.mp3", "rb") as f:
+    data = f.read()
+    st.audio(data, format="audio/mp3")
+
 
 st.markdown(f"""
     <audio autoplay loop>
