@@ -35,28 +35,30 @@ def reproducir_musica():
             st.audio(data, format="audio/mp3", autoplay=True, loop=True)
     except:
         pass
+import streamlit as st
+import streamlit.components.v1 as components
+
+
+
+
 
 # PANTALLA 1: Bienvenida
 if not st.session_state.empezar:
-    reproducir_musica()
     st.markdown('<p class="titulo-gigante">Coucou ma femme boostée ! ❤️</p>', unsafe_allow_html=True)
     st.write("<br><br>", unsafe_allow_html=True)
-    if st.button("Clique ici mon amour ✨", use_container_width=True):
-        st.session_state.empezar = True
-        st.rerun()
+    col_btn1, col_btn2, col_btn3 = st.columns([1, 1, 1])
+    with col_btn2:
+        if st.button("Clique ici mon amour ✨"):
+            st.session_state.empezar = True
+            st.rerun()
 
 # PANTALLA FINAL
 elif st.session_state.mostrar_final:
     st.balloons()
     st.title("OUI ! ❤️")
-    
-    try:
-        st.image("IMG_1950.jpg", use_container_width=True)
-    except:
-        st.image("https://i.pinimg.com/originals/81/15/44/8115442566c727a2024b33878b66f212.gif")
-    
+    st.image("https://i.pinimg.com/originals/81/15/44/8115442566c727a2024b33878b66f212.gif")
     st.success("Je t'aime !")
-    st.markdown("""
+    st.markdown(f"""
     ### Je t'aime. 
     ### Sois prête le dimanche 15 janvier à 20h. 
     ### Habille-toi très jolie, même s'il me semble impossible que tu sois plus belle que tu ne l'es déjà. ❤️
@@ -64,13 +66,62 @@ elif st.session_state.mostrar_final:
 
 # PANTALLA 2: La pregunta
 else:
-    reproducir_musica()
     st.title("Veux-tu être ma Valentine ? 🌹")
     st.image("https://i.pinimg.com/originals/81/15/44/8115442566c727a2024b33878b66f212.gif")
 
+    # Lógica de intentos
     if st.session_state.intentos < 3:
         col1, col2 = st.columns(2)
         with col1:
-            if st.button("OUI ! ❤️", type="primary", use_container_width=True):
+            if st.button("OUI ! ❤️", type="primary"):
                 st.session_state.mostrar_final = True
-                st
+                st.rerun()
+        with col2:
+            if st.button("Non 😢"):
+                st.session_state.intentos += 1
+                st.rerun()
+        
+        if st.session_state.intentos > 0:
+            mensajes = ["Tu es sûre ? 🤔", "Réfléchis encore... 🥺", "Le bouton OUI est plus joli, non ? ✨"]
+            st.info(mensajes[st.session_state.intentos - 1])
+
+    else:
+        # A partir del 4to intento: Botón "OUI" gigante de Streamlit y "NON" falso que huye
+        st.warning("Attention... le bouton va commencer à bouger ! 🏃‍♂️")
+        
+        # Botón OUI real de Streamlit (Para que funcione el clic)
+        # El tamaño aumenta con st.session_state.intentos
+        tamano = 20 + (st.session_state.intentos * 10)
+        st.markdown(f"<style>div.stButton > button:first-child {{ font-size: {tamano}px !important; width: 100%; }}</style>", unsafe_allow_html=True)
+        
+        if st.button("OUI ! ❤️", key="boton_gigante", type="primary"):
+            st.session_state.mostrar_final = True
+            st.rerun()
+
+        # Botón NON que huye (HTML/JS)
+        # Este botón es solo visual para "engañarla", al pasar el mouse se mueve
+        valentine_js = """
+        <div id="container" style="height: 200px; width: 100%; position: relative;">
+            <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()" style="
+                background-color: #808080; color: white; border: none;
+                padding: 10px 20px; font-size: 18px; border-radius: 15px;
+                position: absolute; left: 45%; top: 20px; transition: 0.1s;
+                cursor: pointer;
+            ">Non 😢</button>
+        </div>
+        <script>
+            function moveButton() {
+                var btn = document.getElementById('noBtn');
+                var x = Math.random() * (window.innerWidth - 100);
+                var y = Math.random() * 150;
+                btn.style.left = x + 'px';
+                btn.style.top = y + 'px';
+            }
+        </script>
+        """
+        components.html(valentine_js, height=250)
+        
+        # Un botón invisible para aumentar el contador si logra clicar el "No" (opcional)
+        if st.button("J'insiste, c'est NON !", key="retry"):
+            st.session_state.intentos += 1
+            st.rerun()
