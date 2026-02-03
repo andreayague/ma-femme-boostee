@@ -1,7 +1,7 @@
 import streamlit as st
 import streamlit.components.v1 as components
 
-# Configuración de la página
+# Configuración
 st.set_page_config(page_title="Pour ma chérie ❤️", page_icon="🌹")
 
 # Inicializar estados
@@ -12,7 +12,7 @@ if 'intentos' not in st.session_state:
 if 'mostrar_final' not in st.session_state:
     st.session_state.mostrar_final = False
 
-# Estilo y Música (Autoplay)
+# Estilo
 st.markdown("""
     <style>
     .main { background-color: #fff0f3; }
@@ -24,16 +24,13 @@ st.markdown("""
         font-weight: bold;
         margin-top: 15%;
     }
-    /* Estilo para los globos y éxito */
-    .stSuccess { font-size: 24px !important; text-align: center; }
     </style>
     """, unsafe_allow_html=True)
 
-# --- MÚSICA ---
-# Puedes cambiar el link de YouTube por cualquier canción romántica
+# Música de fondo
 st.write(f'<iframe width="0" height="0" src="https://www.youtube.com/embed/LjhCEhWiKXk?autoplay=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>', unsafe_allow_html=True)
 
-# PANTALLA 1: BIENVENIDA
+# PANTALLA 1: Bienvenida
 if not st.session_state.empezar:
     st.markdown('<p class="titulo-gigante">Coucou ma femme boostée ! ❤️</p>', unsafe_allow_html=True)
     st.write("<br><br>", unsafe_allow_html=True)
@@ -43,83 +40,76 @@ if not st.session_state.empezar:
             st.session_state.empezar = True
             st.rerun()
 
-# PANTALLA FINAL (Cuando dice OUI)
+# PANTALLA FINAL
 elif st.session_state.mostrar_final:
     st.balloons()
     st.title("OUI ! ❤️")
-    st.image("https://i.pinimg.com/originals/81/15/44/8115442566c727a2024b33878b66f212.gif") # Tu GIF de Pinterest
+    st.image("https://i.pinimg.com/originals/81/15/44/8115442566c727a2024b33878b66f212.gif")
     st.success("Je t'aime !")
-    st.markdown("""
+    st.markdown(f"""
     ### Je t'aime. 
-    ### Sois prête le dimanche 15 février à 20h. 
+    ### Sois prête le dimanche 15 janvier à 20h. 
     ### Habille-toi très jolie, même s'il me semble impossible que tu sois plus belle que tu ne l'es déjà. ❤️
     """)
-    # Nota: Puse 15 de febrero porque San Valentín es en febrero, cámbialo a enero en el código si prefieres.
 
-# PANTALLA 2: EL JUEGO
+# PANTALLA 2: La pregunta
 else:
     st.title("Veux-tu être ma Valentine ? 🌹")
     st.image("https://i.pinimg.com/originals/81/15/44/8115442566c727a2024b33878b66f212.gif")
 
-    # Mensajes de persuasión
-    messages = [
-        "Tu es sûre ? 🤔",
-        "Réfléchis encore... 🥺",
-        "Le bouton OUI est plus joli, non ? ✨",
-        "Attention... le bouton va commencer à bouger ! 🏃‍♂️"
-    ]
-
-    # Lógica de los botones
+    # Lógica de intentos
     if st.session_state.intentos < 3:
-        # Botones estáticos (Primeros 3 intentos)
         col1, col2 = st.columns(2)
         with col1:
-            if st.button("OUI ! ❤️", key="btn_si_estatico"):
+            if st.button("OUI ! ❤️", type="primary"):
                 st.session_state.mostrar_final = True
                 st.rerun()
         with col2:
-            if st.button("Non 😢", key="btn_no_estatico"):
+            if st.button("Non 😢"):
                 st.session_state.intentos += 1
                 st.rerun()
         
         if st.session_state.intentos > 0:
-            st.info(messages[st.session_state.intentos - 1])
+            mensajes = ["Tu es sûre ? 🤔", "Réfléchis encore... 🥺", "Le bouton OUI est plus joli, non ? ✨"]
+            st.info(mensajes[st.session_state.intentos - 1])
 
     else:
-        # Botones dinámicos (A partir del 4º intento)
-        st.info(messages[3])
+        # A partir del 4to intento: Botón "OUI" gigante de Streamlit y "NON" falso que huye
+        st.warning("Attention... le bouton va commencer à bouger ! 🏃‍♂️")
         
-        # HTML/JS para movimiento y crecimiento
-        valentine_js = f"""
-        <div id="container" style="height: 300px; width: 100%; position: relative; text-align: center;">
-            <button id="siBtn" onclick="parent.postMessage('si_clicked', '*')" style="
-                background-color: #ff4d6d; color: white; border: none;
-                padding: 15px 32px; font-size: {20 + (st.session_state.intentos * 5)}px;
-                border-radius: 20px; cursor: pointer; position: absolute;
-                left: 10%; top: 50px; transition: 0.3s;
-            ">OUI ! ❤️</button>
+        # Botón OUI real de Streamlit (Para que funcione el clic)
+        # El tamaño aumenta con st.session_state.intentos
+        tamano = 20 + (st.session_state.intentos * 10)
+        st.markdown(f"<style>div.stButton > button:first-child {{ font-size: {tamano}px !important; width: 100%; }}</style>", unsafe_allow_html=True)
+        
+        if st.button("OUI ! ❤️", key="boton_gigante", type="primary"):
+            st.session_state.mostrar_final = True
+            st.rerun()
 
+        # Botón NON que huye (HTML/JS)
+        # Este botón es solo visual para "engañarla", al pasar el mouse se mueve
+        valentine_js = """
+        <div id="container" style="height: 200px; width: 100%; position: relative;">
             <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()" style="
                 background-color: #808080; color: white; border: none;
-                padding: 15px 32px; font-size: 20px; border-radius: 20px;
-                position: absolute; left: 60%; top: 50px; transition: 0.1s;
+                padding: 10px 20px; font-size: 18px; border-radius: 15px;
+                position: absolute; left: 45%; top: 20px; transition: 0.1s;
+                cursor: pointer;
             ">Non 😢</button>
         </div>
-
         <script>
-            function moveButton() {{
+            function moveButton() {
                 var btn = document.getElementById('noBtn');
-                var x = Math.random() * (window.innerWidth - btn.offsetWidth - 50);
-                var y = Math.random() * (250);
+                var x = Math.random() * (window.innerWidth - 100);
+                var y = Math.random() * 150;
                 btn.style.left = x + 'px';
                 btn.style.top = y + 'px';
-            }}
+            }
         </script>
         """
-        components.html(valentine_js, height=350)
+        components.html(valentine_js, height=250)
         
-        # Escuchar el click del JS
-        # Como los componentes de Streamlit son aislados, usamos un pequeño truco de botón invisible o check
-        if st.button("Confirmer le OUI ! ❤️ (clique ici si le bouton rose est trop gros)"):
-            st.session_state.mostrar_final = True
+        # Un botón invisible para aumentar el contador si logra clicar el "No" (opcional)
+        if st.button("J'insiste, c'est NON !", key="retry"):
+            st.session_state.intentos += 1
             st.rerun()
