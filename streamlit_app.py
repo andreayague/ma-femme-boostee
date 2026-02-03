@@ -64,7 +64,7 @@ elif st.session_state.mostrar_final:
 # PANTALLA 2: La pregunta
 else:
     st.title("Veux-tu être ma Valentine ? 🌹")
-    st.image("https://i.pinimg.com/originals/81/15/44/8115442566c727a2024b33878b66f212.gif")
+    st.image("https://i.pinimg.com/originals/f1/09/3d/f1093dd6dce5892d2b74c6e8d8c1c909.gif")
 
     # Lógica de intentos
     if st.session_state.intentos < 3:
