@@ -28,7 +28,16 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # Música de fondo
-st.write(f'<iframe width="0" height="0" src="https://www.youtube.com/embed/LjhCEhWiKXk?autoplay=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>', unsafe_allow_html=True)
+# --- MÚSICA (Audio Player) ---
+# He usado una canción romántica instrumental de ejemplo (puedes cambiar el link .mp3)
+audio_url = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" 
+
+st.markdown(f"""
+    <audio autoplay loop>
+        <source src="{audio_url}" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+    """, unsafe_allow_html=True)
 
 # PANTALLA 1: Bienvenida
 if not st.session_state.empezar:
