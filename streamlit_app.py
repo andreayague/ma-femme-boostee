@@ -30,7 +30,7 @@ st.markdown("""
 # Música de fondo
 # --- MÚSICA (Audio Player) ---
 # He usado una canción romántica instrumental de ejemplo (puedes cambiar el link .mp3)
-audio_url = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" 
+audio_url = "" 
 
 st.markdown(f"""
     <audio autoplay loop>
