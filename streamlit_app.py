@@ -56,7 +56,7 @@ elif st.session_state.mostrar_final:
     
     st.success("Je t'aime !")
     st.markdown("""
-    ### Je t'aime tete de noeil. 
+    ### Je t'aime mi amor. 
     ### Sois prête le dimanche 15 janvier à 20h. 
     ### Habille-toi très jolie, même s'il me semble impossible que tu sois plus belle que tu ne l'es déjà. ❤️
     """)
