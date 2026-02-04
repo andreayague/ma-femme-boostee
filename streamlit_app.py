@@ -50,7 +50,7 @@ elif st.session_state.mostrar_final:
     st.balloons()
     st.title("OUI ! ❤️")
     try:
-        st.image("IMG_1950.jpg", use_container_width=True)
+        st.image("IMG_3332.jpg", use_container_width=True)
     except:
         st.image("https://i.pinimg.com/originals/81/15/44/8115442566c727a2024b33878b66f212.gif")
     
